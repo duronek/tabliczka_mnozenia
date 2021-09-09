@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+.container-fluid {
+  background-color: rgb(24, 39, 54);
+  height: 100vh;
+
+  header {
+    height: 50px;
+    background-color: bisque;
+    border-bottom: solid 1px black;
+  }
+
+  main {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: calc(100% - 100px);
+
+    .excercise {
+      width: 100%;
+      height: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-direction: row;
+
+      p {
+        color: white;
+        font-size: 4rem;
+      }
+
+      .number {
+        width: 25%;
+        height: 150px;
+        border: solid 3px green;
+        font-size: 6rem;
+        font-weight: bold;
+        color: brown;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .result {
+        color: orange;
+        border: solid 3px greenyellow;
+      }
+
+      p {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+
+    .response {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 80%;
+      max-width: 500px;
+      height: 10%;
+      margin-bottom: 50px;
+
+      .btn {
+        font-size: 2rem;
+        width: 30%;
+        height: 100%;
+      }
+    }
+
+    .status {
+      width: 80%;
+      height: 100px;
+
+      .message {
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      .btn {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    background-color: bisque;
+    border-top: solid 1px black;
+  }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/tabliczka.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header class="row"></header>
+      <main>
+        <div class="excercise">
+          <div class="number a"></div>
+          <p>*</p>
+          <div class="number b"></div>
+          <p>=</p>
+          <div class="number result"></div>
+        </div>
+        <div class="response">
+          <button type="button" class="btn btn-outline-info res_a"></button>
+          <button type="button" class="btn btn-outline-info res_b"></button>
+          <button type="button" class="btn btn-outline-info res_c"></button>
+        </div>
+        <div class="status">
+          <p class="message"></p>
+          <button type="button" name="" id="" class="btn btn-primary" onclick="tabliczka.start();">START</button>
+          <button type="button" name="" id="" class="btn btn-warning" onclick="tabliczka.stop();">STOP</button>
+        </div>
+        <p class="statistics"></p>
+      </main>
+      <footer class="row"></footer>
+    </div>
+  </body>
+  <script src="./tabliczka.js"></script>
+
+  <script>
+    document.querySelector('.response').addEventListener('click', (element) => {
+      if (Array.from(element.target.classList).includes('btn')) {
+        document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('active'));
+        element.target.classList.add('active');
+        response = parseInt(element.target.innerText);
+        console.log('Odpowiedz ' + response);
+      }
+    });
+  </script>
+</html>

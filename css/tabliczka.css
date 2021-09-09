@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container-fluid {
+  background-color: #182736;
+  height: 100vh;
+}
+
+.container-fluid header {
+  height: 50px;
+  background-color: bisque;
+  border-bottom: solid 1px black;
+}
+
+.container-fluid main {
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: calc(100% - 100px);
+}
+
+.container-fluid main .excercise {
+  width: 100%;
+  height: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.container-fluid main .excercise p {
+  color: white;
+  font-size: 4rem;
+}
+
+.container-fluid main .excercise .number {
+  width: 25%;
+  height: 150px;
+  border: solid 3px green;
+  font-size: 6rem;
+  font-weight: bold;
+  color: brown;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container-fluid main .excercise .result {
+  color: orange;
+  border: solid 3px greenyellow;
+}
+
+.container-fluid main .excercise p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.container-fluid main .response {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 80%;
+  max-width: 500px;
+  height: 10%;
+  margin-bottom: 50px;
+}
+
+.container-fluid main .response .btn {
+  font-size: 2rem;
+  width: 30%;
+  height: 100%;
+}
+
+.container-fluid main .status {
+  width: 80%;
+  height: 100px;
+}
+
+.container-fluid main .status .message {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.container-fluid main .status .btn {
+  margin-right: 15px;
+}
+
+.container-fluid footer {
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  background-color: bisque;
+  border-top: solid 1px black;
+}
+/*# sourceMappingURL=tabliczka.css.map */
