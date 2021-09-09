@@ -11,7 +11,9 @@
   </head>
   <body>
     <div class="container-fluid">
-      <header class="row"></header>
+      <header class="">
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal">⚙️</button>
+      </header>
       <main>
         <div class="excercise">
           <div class="number a"></div>
@@ -30,9 +32,56 @@
           <button type="button" name="" id="" class="btn btn-primary" onclick="tabliczka.start();">START</button>
           <button type="button" name="" id="" class="btn btn-warning" onclick="tabliczka.stop();">STOP</button>
         </div>
-        <p class="statistics"></p>
+        <div class="statistics"></div>
       </main>
       <footer class="row"></footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Konfiguracja tabliczki mnożenia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row mb-3">
+                <label for="inputMin" class="col-sm-4 col-form-label">Wartość Min.</label>
+                <div class="col-sm-8">
+                  <input type="number" min="0" max="100" class="form-control" id="inputMin" />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="inputMax" class="col-sm-4 col-form-label">Wartość Max.</label>
+                <div class="col-sm-8">
+                  <input type="number" min="0" max="100" class="form-control" id="inputMax" />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="inputTime" class="col-sm-4 col-form-label">Czas na odpowiedź</label>
+                <div class="col-sm-8">
+                  <input type="number" min="2" max="30" class="form-control" id="inputTime" />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="inputExcrciseCount" class="col-sm-4 col-form-label">Ilość pytań</label>
+                <div class="col-sm-8">
+                  <input type="number" min="2" max="30" class="form-control" id="inputExcrciseCount" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="saveNewConfig();">Zapisz ustawienia</button>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
   <script src="./tabliczka.js"></script>
@@ -43,8 +92,29 @@
         document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('active'));
         element.target.classList.add('active');
         response = parseInt(element.target.innerText);
-        console.log('Odpowiedz ' + response);
       }
+    });
+
+    function getConfig() {
+      const { min = 0, max = 50, timeForReq: time = 5, count = 10 } = tabliczka.getConfig();
+      document.getElementById('inputMin').value = min;
+      document.getElementById('inputMax').value = max;
+      document.getElementById('inputTime').value = time;
+      document.getElementById('inputExcrciseCount').value = count;
+    }
+
+    function saveNewConfig() {
+      const min = parseInt(document.getElementById('inputMin').value) || 0;
+      const max = parseInt(document.getElementById('inputMax').value) || 50;
+      const time = parseInt(document.getElementById('inputTime').value) || 5;
+      const count = parseInt(document.getElementById('inputExcrciseCount').value) || 10;
+
+      tabliczka.setConfig(min, max, time, count);
+    }
+
+    var modalConfig = document.getElementById('settingsModal');
+    modalConfig.addEventListener('show.bs.modal', () => {
+      getConfig();
     });
   </script>
 </html>

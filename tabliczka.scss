@@ -90,6 +90,25 @@ body {
         margin-right: 15px;
       }
     }
+
+    .statistics {
+      max-height: calc(100% - 100px);
+      overflow: auto;
+      width: 90%;
+      padding: 15px;
+
+      .emoji {
+        display: inline-block;
+        cursor: pointer;
+        margin: 0 10px;
+        font-size: 3rem;
+        transition: 1s;
+      }
+
+      .emoji:hover {
+        transform: scale(1.5) rotate(360deg);
+      }
+    }
   }
 
   footer {

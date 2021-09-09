@@ -1,5 +1,6 @@
 
-function KonfigBuilder() {
+//Model
+function ConfigBuilder() {
   let config;
 
   const defaultConfig = {
@@ -21,7 +22,7 @@ function KonfigBuilder() {
   }
 }
 
-function StatisticsBuilder() {
+function UserGameModelBuilder() {
   let excerciseHistory = [];
 
   const deepEqual = (object1, object2) => {
@@ -68,32 +69,49 @@ function StatisticsBuilder() {
     return true;
   }
 
+  const addResult = (result) => {
+    if (excerciseHistory.length > 0) {
+      excerciseHistory[excerciseHistory.length - 1].result = result;
+    }
+  }
+
   return {
     clearHistory,
-    isUniqueExcercise
+    isUniqueExcercise,
+    addResult,
+    getHistory: () => excerciseHistory
   }
 }
 
-function TabliczkaBuilder(aElement, bElement, iloczynElement, messageElement) {
-  let goodResponseCount = 0;
+
+//Controler
+function TabliczkaBuilder() {
+
+  const aElement = document.querySelector('.a');
+  const bElement = document.querySelector('.b');
+  const iloczynElement = document.querySelector('.result');
+  const messageElement = document.querySelector('p.message');
+  const statisticsElement = document.querySelector('.statistics');
+
   let timer = null;
 
-  const configBuilder = KonfigBuilder();
-  const statistics = StatisticsBuilder();
+  const configuration = ConfigBuilder();
+  const userGameModel = UserGameModelBuilder();
 
   const setConfig = (min, max, timeForReq, count) => {
     if (timer) {
-      console.error('Jesteś w trakcie gry. Zakończ grę lub ją zatrzymaj');
+      messageElement.innerHTML = '<h2>Jesteś w trakcie gry. Zakończ grę lub ją zatrzymaj</h2>';
     } else {
-      configBuilder.initConfig({ min, max, timeForReq, count });
+      configuration.initConfig({ min, max, timeForReq, count });
     }
   }
 
   const getExcercise = () => {
     let a, b, iloczyn;
     let excercise;
+    let randomExcerciseCounter = 0;
 
-    const config = configBuilder.getConfig();
+    const config = configuration.getConfig();
     const maxRandomNumber = Math.round(Math.sqrt(config.max) + 1);
 
     a = Math.round(Math.random() * maxRandomNumber);
@@ -104,24 +122,27 @@ function TabliczkaBuilder(aElement, bElement, iloczynElement, messageElement) {
       excercise = {
         a,
         b,
-        iloczyn
+        iloczyn,
+        result: null
       };
 
-    } while (iloczyn > config.max || !statistics.isUniqueExcercise(excercise))
+      randomExcerciseCounter++;
+
+    } while ((iloczyn > config.max || iloczyn < config.min || !userGameModel.isUniqueExcercise(excercise)) && (randomExcerciseCounter < 100))
 
     return excercise;
   }
 
-  const getResponse = () => {
+  const getResult = () => {
     const resElement = document.querySelector('.response .btn.active');
-    if (resElement) {
+    if (resElement !== null) {
       return parseInt(resElement.innerText);
     } else {
       return null;
     }
   }
 
-  const setResponses = (goodResponce) => {
+  const setResultOptions = (goodResponce) => {
     const goodResponceElementIndex = Math.round(Math.random() * 2);
 
     document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('active'));
@@ -139,116 +160,113 @@ function TabliczkaBuilder(aElement, bElement, iloczynElement, messageElement) {
     });
   }
 
-  const showStatistics = (count) => {
-    const procenty = (goodResponseCount / count * 100).toFixed(1);
-    document.querySelector('p.statistics').innerHTML = `<h2>Dobrych odpowiedzi: <span class='text-warning'>${goodResponseCount}</span> na <span class='text-warning'>${count}</span> pytań. [<span class='text-primary'>${procenty}%</span>]</h2>`;
+  const getResultEmoji = (percent) => {
+    if (percent >= 90) return '😎';
+    if (percent >= 80 && percent < 90) return '😀'
+    if (percent >= 70 && percent < 80) return '🙂'
+    if (percent >= 60 && percent < 70) return '🤨'
+    if (percent >= 50 && percent < 60) return '😞'
+    if (percent >= 40 && percent < 50) return '☹️'
+    if (percent >= 30 && percent < 40) return '😠'
+    if (percent >= 20 && percent < 30) return '😡'
+    if (percent < 20) return '😱'
   }
 
-  const clearStatistics = () => {
-    document.querySelector('p.statistics').innerText = '';
-    goodResponseCount = 0;
+  const showStatistics = () => {
+    const exercisesHistory = userGameModel.getHistory();
+    let goodResponseCount = 0;
+    const count = exercisesHistory.length;
+    htmlResult = '';
+
+    exercisesHistory.forEach(({ a, b, iloczyn, result = null }, index) => {
+      goodResponseCount += (iloczyn === result) ? 1 : 0;
+      const excerciseText = `${a}*${b}=${iloczyn}  [Odp: ${result === null ? "---" : result}]`
+      htmlResult += (iloczyn === result) ? `<div class="alert alert-success" role="alert">✔️  ${excerciseText} </div>` : `<div class="alert alert-danger" role="alert">❌  ${excerciseText} </div>`
+    })
+
+    const percent = (count == 0) ? 0 : (goodResponseCount / count * 100).toFixed(1);
+    htmlResult = `<h2 class="text-center"><span class='text-warning'>${goodResponseCount}</span> na <span class='text-warning'>${count}</span>  <span class='emoji'>${getResultEmoji(percent)}</span></h2>` + htmlResult;
+    statisticsElement.innerHTML = htmlResult;
+  }
+
+  const showExcercise = () => {
+    document.querySelector('.excercise').style.display = "";
+    document.querySelector('.response').style.display = "";
+  }
+
+  const hideExcercise = () => {
+    document.querySelector('.excercise').style.display = "none";
+    document.querySelector('.response').style.display = "none";
   }
 
   const start = () => {
-    const config = configBuilder.getConfig();
     if (timer) {
-      if (messageElement) {
-        messageElement.innerText = 'Jesteś w trakcie gry. Zakończ grę lub ją zatrzymaj'
-      } else {
-        console.error('Jesteś w trakcie gry. Zakończ grę lub ją zatrzymaj');
-      }
+      messageElement.innerHTML = '<h2>Jesteś w trakcie gry. Zakończ grę lub ją zatrzymaj</h2>'
       return;
     }
 
-    clearStatistics();
-
-    let excerciseNumber = 0;
+    showExcercise();
+    document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('disabled'));
+    const config = configuration.getConfig();
+    userGameModel.clearHistory();
+    statisticsElement.innerHTML = '';
+    let excerciseIndex = 0;
     let lastExcercise = null;
 
     timer = setInterval(() => {
       if (lastExcercise) {
-        const res = getResponse();
-        if (res && res == lastExcercise.iloczyn) {
-          goodResponseCount++;
-        }
-        console.log(lastExcercise.iloczyn);
+        const userResult = getResult();
+        userGameModel.addResult(userResult);
       }
 
-      excerciseNumber++;
-      if (excerciseNumber >= config.count) {
+      excerciseIndex++;
+      if (excerciseIndex > config.count) {
         stop();
+        return;
       }
 
       const excercise = getExcercise();
       const { a, b, iloczyn } = excercise;
+      messageElement.innerText = `Zadanie : ${excerciseIndex}/${config.count}`
+      iloczynElement.innerText = "";
+      setTimeout(() => {
+        iloczynElement.innerText = iloczyn;
+      }, config.timeForReq * 1000)
 
-      if (messageElement) {
-        messageElement.innerText = `Zadanie : ${excerciseNumber}/${config.count}`
-      }
+      aElement.innerText = a;
+      bElement.innerText = b;
 
-      if (iloczynElement) {
-        iloczynElement.innerText = "";
-        setTimeout(() => {
-          iloczynElement.innerText = iloczyn;
-          if (excerciseNumber >= config.count) {
-            showStatistics(config.count);
-          }
+      setResultOptions(iloczyn);
 
-        }, config.timeForReq * 1000)
-      }
-
-      if (aElement) {
-        aElement.innerText = a;
-      }
-
-      if (bElement) {
-        bElement.innerText = b;
-      }
-
-      setResponses(iloczyn);
-
-      if (!aElement && !bElement) {
-        process.stdout.write(`${a}*${b}=`);
-      }
       lastExcercise = excercise;
-    }, (config.timeForReq + 2) * 1000);
+    }, (config.timeForReq + 1.5) * 1000);
   }
 
   const stop = () => {
-    const message = 'Koniec zadań';
-    if (messageElement) {
-      messageElement.innerText = message;
-      setTimeout(() => {
-        messageElement.innerText = ''
-      }, 1500);
-    } else {
-      console.log(message);
-    }
-
-    if (aElement)
-      aElement.innerText = '';
-    if (bElement)
-      bElement.innerText = '';
-    if (iloczynElement)
-      iloczynElement.innerText = '';
-
-    statistics.clearHistory();
     clearInterval(timer);
     timer = null;
+    hideExcercise();
+    messageElement.innerHTML = '<h2>Koniec zadań</h2>';
+
+    aElement.innerText = '';
+    bElement.innerText = '';
+    iloczynElement.innerText = '';
+    document.querySelectorAll(".response button").forEach(el => el.innerText = '');
+    document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('active'));
+    document.querySelectorAll('.response button').forEach((btn) => btn.classList.add('disabled'));
+
+    showStatistics();
   }
 
+  hideExcercise();
   return {
+    getConfig: () => configuration.getConfig(),
     setConfig,
     start,
     stop
   }
 }
 
-const aElement = document.querySelector('.a');
-const bElement = document.querySelector('.b');
-const iloczynElement = document.querySelector('.result');
-const messageElement = document.querySelector('p.message');
-
-const tabliczka = TabliczkaBuilder(aElement, bElement, iloczynElement, messageElement);
+const tabliczka = TabliczkaBuilder();
 tabliczka.setConfig(1, 50, 5, 10);
 //tabliczka.start();

@@ -122,6 +122,27 @@ body {
   margin-right: 15px;
 }
 
+.container-fluid main .statistics {
+  max-height: calc(100% - 100px);
+  overflow: auto;
+  width: 90%;
+  padding: 15px;
+}
+
+.container-fluid main .statistics .emoji {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 10px;
+  font-size: 3rem;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.container-fluid main .statistics .emoji:hover {
+  -webkit-transform: scale(1.5) rotate(360deg);
+          transform: scale(1.5) rotate(360deg);
+}
+
 .container-fluid footer {
   position: fixed;
   bottom: 0;
