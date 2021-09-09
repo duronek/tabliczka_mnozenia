@@ -5,16 +5,23 @@
 
 body {
   box-sizing: border-box;
+  background-color: rgb(24, 39, 54);
 }
 
-.container-fluid {
-  background-color: rgb(24, 39, 54);
+.container {
   height: 100vh;
 
   header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     height: 50px;
     background-color: bisque;
     border-bottom: solid 1px black;
+
+    .settings {
+      font-size: 1.5rem;
+    }
   }
 
   main {

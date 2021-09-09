@@ -6,20 +6,33 @@
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  background-color: #182736;
 }
 
-.container-fluid {
-  background-color: #182736;
+.container {
   height: 100vh;
 }
 
-.container-fluid header {
+.container header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   height: 50px;
   background-color: bisque;
   border-bottom: solid 1px black;
 }
 
-.container-fluid main {
+.container header .settings {
+  font-size: 1.5rem;
+}
+
+.container main {
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,7 +50,7 @@ body {
   height: calc(100% - 100px);
 }
 
-.container-fluid main .excercise {
+.container main .excercise {
   width: 100%;
   height: 30%;
   display: -webkit-box;
@@ -54,12 +67,12 @@ body {
           flex-direction: row;
 }
 
-.container-fluid main .excercise p {
+.container main .excercise p {
   color: white;
   font-size: 4rem;
 }
 
-.container-fluid main .excercise .number {
+.container main .excercise .number {
   width: 25%;
   height: 150px;
   border: solid 3px green;
@@ -77,17 +90,17 @@ body {
           align-items: center;
 }
 
-.container-fluid main .excercise .result {
+.container main .excercise .result {
   color: orange;
   border: solid 3px greenyellow;
 }
 
-.container-fluid main .excercise p {
+.container main .excercise p {
   font-size: 2rem;
   font-weight: bold;
 }
 
-.container-fluid main .response {
+.container main .response {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -102,34 +115,34 @@ body {
   margin-bottom: 50px;
 }
 
-.container-fluid main .response .btn {
+.container main .response .btn {
   font-size: 2rem;
   width: 30%;
   height: 100%;
 }
 
-.container-fluid main .status {
+.container main .status {
   width: 80%;
   height: 100px;
 }
 
-.container-fluid main .status .message {
+.container main .status .message {
   font-size: 2rem;
   text-align: center;
 }
 
-.container-fluid main .status .btn {
+.container main .status .btn {
   margin-right: 15px;
 }
 
-.container-fluid main .statistics {
+.container main .statistics {
   max-height: calc(100% - 100px);
   overflow: auto;
   width: 90%;
   padding: 15px;
 }
 
-.container-fluid main .statistics .emoji {
+.container main .statistics .emoji {
   display: inline-block;
   cursor: pointer;
   margin: 0 10px;
@@ -138,12 +151,12 @@ body {
   transition: 1s;
 }
 
-.container-fluid main .statistics .emoji:hover {
+.container main .statistics .emoji:hover {
   -webkit-transform: scale(1.5) rotate(360deg);
           transform: scale(1.5) rotate(360deg);
 }
 
-.container-fluid footer {
+.container footer {
   position: fixed;
   bottom: 0;
   height: 50px;
