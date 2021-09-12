@@ -81,6 +81,10 @@ body {
         font-size: 2rem;
         width: 30%;
         height: 100%;
+
+        &.active {
+          background-color: orange;
+        }
       }
     }
 
@@ -116,14 +120,5 @@ body {
         transform: scale(1.5) rotate(360deg);
       }
     }
-  }
-
-  footer {
-    position: fixed;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
-    background-color: bisque;
-    border-top: solid 1px black;
   }
 }

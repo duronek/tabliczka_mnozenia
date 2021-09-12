@@ -121,6 +121,10 @@ body {
   height: 100%;
 }
 
+.container main .response .btn.active {
+  background-color: orange;
+}
+
 .container main .status {
   width: 80%;
   height: 100px;
@@ -154,14 +158,5 @@ body {
 .container main .statistics .emoji:hover {
   -webkit-transform: scale(1.5) rotate(360deg);
           transform: scale(1.5) rotate(360deg);
-}
-
-.container footer {
-  position: fixed;
-  bottom: 0;
-  height: 50px;
-  width: 100%;
-  background-color: bisque;
-  border-top: solid 1px black;
 }
 /*# sourceMappingURL=tabliczka.css.map */

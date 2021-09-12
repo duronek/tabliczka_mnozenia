@@ -225,11 +225,17 @@ function TabliczkaBuilder() {
         return;
       }
 
+      document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('hover'));
       const excercise = getExcercise();
       const { a, b, iloczyn } = excercise;
       messageElement.innerText = `Zadanie : ${excerciseIndex}/${config.count}`
       iloczynElement.innerText = "";
       setTimeout(() => {
+        if (lastExcercise) {
+          const userResult = getResult();
+          userGameModel.addResult(userResult);
+        }
+
         iloczynElement.innerText = iloczyn;
       }, config.timeForReq * 1000)
 
@@ -254,7 +260,7 @@ function TabliczkaBuilder() {
     document.querySelectorAll(".response button").forEach(el => el.innerText = '');
     document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('active'));
     document.querySelectorAll('.response button').forEach((btn) => btn.classList.add('disabled'));
-
+    document.querySelectorAll('.response button').forEach((btn) => btn.classList.remove('hover'));
     showStatistics();
   }
 
